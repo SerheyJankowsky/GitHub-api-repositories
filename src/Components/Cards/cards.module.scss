@@ -36,6 +36,11 @@
       color: #fff;
       background-color: crimson;
     }
+    &:disabled {
+      color: #fff;
+      background-color: crimson;
+      cursor: default;
+    }
   }
 }
 

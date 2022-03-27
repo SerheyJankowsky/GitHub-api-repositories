@@ -17,4 +17,11 @@ const selectedItems = createReducer([], {
   [repositoriesActions.addSelected]: (_, { payload }) => payload,
 });
 
-export default combineReducers({ dataRepo, selectedItems });
+const favorites = createReducer([], {
+  [repositoriesActions.addFavorite]: (state, { payload }) => [
+    ...state,
+    payload,
+  ],
+});
+
+export default combineReducers({ dataRepo, selectedItems, favorites });

@@ -14,15 +14,11 @@ import { useDebounce } from "../../hooks";
 
 const Repositories = () => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState(
-    localStorage.getItem("search") ? localStorage.getItem("search") : "",
-  );
+  const [loading, setLoading] = useState(true);
+  const [value, setValue] = useState("");
   const data = useSelector(repositoriesSelectors.items);
   const pagesCount = useSelector(repositoriesSelectors.totalCount);
-  const [page, setPage] = useState(
-    localStorage.getItem("page") ? localStorage.getItem("page") : 1,
-  );
+  const [page, setPage] = useState(1);
   const paginations = [];
   const count = Math.ceil(pagesCount / 30);
 
@@ -30,15 +26,15 @@ const Repositories = () => {
 
   const getData = async (q, p) => {
     if (q.length >= 1) {
-      await dispatch(
+      console.log("call");
+      dispatch(
         repositoriesOperation.getGitHubData(
           setLoading,
           `https://api.github.com/search/repositories?q=${q}&per_page=30&page=${p}`,
         ),
       );
-      localStorage.setItem("search", q);
     } else {
-      await dispatch(
+      dispatch(
         repositoriesOperation.getGitHubData(
           setLoading,
           `https://api.github.com/search/repositories?q=all&per_page=30&page=${p}`,
@@ -52,7 +48,7 @@ const Repositories = () => {
   const handleSearch = (e) => {
     if (e.target.value.length !== "" && e.target.value !== " ") {
       setValue(e.target.value.trim());
-      debouncedValue(e.target.value, page);
+      localStorage.setItem("search", e.target.value);
     }
   };
 
@@ -62,6 +58,8 @@ const Repositories = () => {
   };
 
   useEffect(() => {
+    localStorage.getItem("page") && setPage(localStorage.getItem("page"));
+    localStorage.getItem("search") && setValue(localStorage.getItem("search"));
     debouncedValue(value, page);
     // eslint-disable-next-line
   }, [page, value]);

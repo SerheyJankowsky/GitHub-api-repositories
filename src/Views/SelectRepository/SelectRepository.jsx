@@ -11,8 +11,10 @@ const Selectrepository = () => {
   const dispatch = useDispatch();
 
   const isData = async () => {
-    const data = await JSON.parse(localStorage.getItem("selectedRepo"));
-    dispatch(repositoriesActions.addSelected(data));
+    if (selectedRepo?.length === 0) {
+      const data = await JSON.parse(localStorage.getItem("selectedRepo"));
+      dispatch(repositoriesActions.addSelected(data));
+    }
   };
 
   useEffect(() => {
