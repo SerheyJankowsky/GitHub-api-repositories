@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css?family=Inconsolata:700");
+
 * {
   padding: 0;
   margin: 0;
   border: 0;
+  user-select: none;
 }
 
 *,
@@ -66,5 +69,6 @@ img {
   vertical-align: top;
 }
 body {
-  background-color: #bfd0ca;
+  background-color: #252525;
+  font-family: "Inconsolata", monospace;
 }
